@@ -48,6 +48,22 @@ h1 {
   font-size: 2rem;
 }
 p { margin: 0;}
+.credits {
+  position: absolute;
+  bottom: 16px;
+  font-size: 14px;
+}
+.credits a:link, .credits a:visited {
+  color: #121212;
+  padding: 0 4px;
+  text-decoration: underline;
+  transition: all 0.4s ease-out;
+}
+.credits a:hover, .credits a:active {
+  text-decoration: none;
+  background-color: #fff;
+  border-radius: 2px;
+}
 
 .quote-container {
   background: rgba(255, 255, 255, 0.7);
@@ -86,7 +102,7 @@ button:hover {
   background-color: #fff8;
 }
 
-@media (min-width: 1024px) /* DESKTOP */ {
+@media (min-width: 700px) /* DESKTOP */ {
   .quote-container {
     font-size: 3rem;
     aspect-ratio: 4 / 2;
