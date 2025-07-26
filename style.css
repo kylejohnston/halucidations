@@ -87,6 +87,8 @@ p { margin: 0;}
   -webkit-perspective: 1000;
   will-change: transform, opacity;
   opacity: 1;
+  contain: content; /* Improves performance by isolating content */
+  content-visibility: auto; /* Helps with rendering performance */
 }
 
 /* Add this new class for fade transitions */

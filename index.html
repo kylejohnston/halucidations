@@ -13,14 +13,15 @@
   <meta property="og:description" content="Profund wisdom... almost" />
   <meta property="og:image" content="https://halucidations.pages.dev/meta-image.png" />
   <link href="https://fonts.googleapis.com/css2?family=Ovo&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=1.03" />
+  <link rel="stylesheet" href="style.css?v=1.04" />
 </head>
 <body>
   <div class="background"></div>
   <main>
     <h1>Halucidations</h1>
     <div class="quote-container">
-      <p id="quote"></p>
+      <p id="quote" aria-live="polite"></p>
+      <div class="loading" hidden>Thinking...</div>
     </div>
     <div class="controls">
       <button id="next">Keep seeking</button>

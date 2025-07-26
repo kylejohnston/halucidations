@@ -1,5 +1,7 @@
 // script.js
 
+const BATCH_SIZE = 20; // Smaller subset of quotes
+let currentQuotes = [];
 let quotes = [];
 const finalMessage = "You've reached the end of the line, but the train was imaginary.";
 
@@ -7,17 +9,22 @@ let shownQuotes = [];
 const quoteEl = document.getElementById("quote");
 const nextBtn = document.getElementById("next");
 
+async function loadQuotes() {
+  const response = await fetch('quotes.json');
+  const allQuotes = await response.json();
+  // Get random subset of quotes
+  currentQuotes = allQuotes
+    .sort(() => Math.random() - 0.5)
+    .slice(0, BATCH_SIZE);
+}
+
 function getRandomQuote() {
-  if (shownQuotes.length === quotes.length) {
-    quoteEl.textContent = finalMessage;
-    nextBtn.disabled = true;
-    return;
+  if (currentQuotes.length < 5) { // Reload when running low
+    loadQuotes();
   }
-  let quote;
-  do {
-    quote = quotes[Math.floor(Math.random() * quotes.length)];
-  } while (shownQuotes.includes(quote));
-  shownQuotes.push(quote);
+  const randomIndex = Math.floor(Math.random() * currentQuotes.length);
+  const quote = currentQuotes[randomIndex];
+  currentQuotes.splice(randomIndex, 1); // Remove used quote
   return quote;
 }
 
