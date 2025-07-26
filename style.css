@@ -79,23 +79,6 @@ p { margin: 0;}
   text-wrap: balance;
   display: grid;
   place-items:center;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  perspective: 1000;
-  -webkit-perspective: 1000;
-  will-change: transform, opacity;
-  opacity: 1;
-  contain: content; /* Improves performance by isolating content */
-  content-visibility: auto; /* Helps with rendering performance */
-}
-
-/* Add this new class for fade transitions */
-.quote-container.fade-out {
-  opacity: 0;
-  transform: translateY(10px);
-  -webkit-transform: translateY(10px);
 }
 
 .controls {
@@ -120,9 +103,7 @@ button:hover {
 }
 
 @media (min-width: 700px) /* DESKTOP */ {
-  main {
-      justify-content: center;
-  }
+  main { justify-content: center; }
   .quote-container {
     font-size: 3rem;
     aspect-ratio: 4 / 2;

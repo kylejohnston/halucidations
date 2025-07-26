@@ -1,7 +1,5 @@
 // script.js
 
-const BATCH_SIZE = 20; // Smaller subset of quotes
-let currentQuotes = [];
 let quotes = [];
 const finalMessage = "You've reached the end of the line, but the train was imaginary.";
 
@@ -9,22 +7,17 @@ let shownQuotes = [];
 const quoteEl = document.getElementById("quote");
 const nextBtn = document.getElementById("next");
 
-async function loadQuotes() {
-  const response = await fetch('quotes.json');
-  const allQuotes = await response.json();
-  // Get random subset of quotes
-  currentQuotes = allQuotes
-    .sort(() => Math.random() - 0.5)
-    .slice(0, BATCH_SIZE);
-}
-
 function getRandomQuote() {
-  if (currentQuotes.length < 5) { // Reload when running low
-    loadQuotes();
+  if (shownQuotes.length === quotes.length) {
+    quoteEl.textContent = finalMessage;
+    nextBtn.disabled = true;
+    return;
   }
-  const randomIndex = Math.floor(Math.random() * currentQuotes.length);
-  const quote = currentQuotes[randomIndex];
-  currentQuotes.splice(randomIndex, 1); // Remove used quote
+  let quote;
+  do {
+    quote = quotes[Math.floor(Math.random() * quotes.length)];
+  } while (shownQuotes.includes(quote));
+  shownQuotes.push(quote);
   return quote;
 }
 
@@ -35,26 +28,6 @@ function showQuote(quote) {
     quoteEl.textContent = quote;
     quoteEl.style.opacity = 1;
   }, 600);
-}
-
-function updateQuote() {
-  const quoteContainer = document.querySelector('.quote-container');
-  const quoteElement = document.getElementById('quote');
-  
-  // Add fade out class
-  quoteContainer.classList.add('fade-out');
-  
-  // Wait for fade out to complete
-  setTimeout(() => {
-    // Update quote text while invisible
-    quoteElement.textContent = getRandomQuote();
-    
-    // Force browser reflow
-    void quoteContainer.offsetWidth;
-    
-    // Remove fade out class to fade back in
-    quoteContainer.classList.remove('fade-out');
-  }, 300); // Match this with your CSS transition duration
 }
 
 nextBtn.addEventListener("click", () => {
