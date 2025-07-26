@@ -30,6 +30,26 @@ function showQuote(quote) {
   }, 600);
 }
 
+function updateQuote() {
+  const quoteContainer = document.querySelector('.quote-container');
+  const quoteElement = document.getElementById('quote');
+  
+  // Add fade out class
+  quoteContainer.classList.add('fade-out');
+  
+  // Wait for fade out to complete
+  setTimeout(() => {
+    // Update quote text while invisible
+    quoteElement.textContent = getRandomQuote();
+    
+    // Force browser reflow
+    void quoteContainer.offsetWidth;
+    
+    // Remove fade out class to fade back in
+    quoteContainer.classList.remove('fade-out');
+  }, 300); // Match this with your CSS transition duration
+}
+
 nextBtn.addEventListener("click", () => {
   const quote = getRandomQuote();
   if (quote) showQuote(quote);
