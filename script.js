@@ -6,6 +6,7 @@ const finalMessage = "You've reached the end of the line, but the train was imag
 let currentQuoteIndex = 0;
 const quoteEl = document.getElementById("quote");
 const nextBtn = document.getElementById("next");
+let isAnimating = false; // Flag to prevent animation overlap
 
 // Fisher-Yates shuffle function
 function shuffleArray(array) {
@@ -17,7 +18,6 @@ function shuffleArray(array) {
 
 function getNextQuote() {
   if (currentQuoteIndex >= quotes.length - 1) {
-    // No change needed for the text content here, as the final message is handled in showNextQuote
     nextBtn.disabled = true;
     return finalMessage;
   }
@@ -26,12 +26,24 @@ function getNextQuote() {
 }
 
 function showQuote(quote) {
-  quoteEl.style.transition = "opacity 0.6s ease";
-  quoteEl.style.opacity = 0;
+  // 1. Check if an animation is already running
+  if (isAnimating) return;
+  isAnimating = true;
+
+  // 2. Add the class to start the fade-out animation
+  quoteEl.classList.add('fade-out');
+
+  // 3. Set a timer that matches the CSS transition duration
   setTimeout(() => {
+    // 4. Update the text when the element is fully faded out
     quoteEl.textContent = quote;
-    quoteEl.style.opacity = 1;
-  }, 600);
+
+    // 5. Remove the class to trigger the fade-in animation
+    quoteEl.classList.remove('fade-out');
+
+    // 6. Allow new animations to start again
+    isAnimating = false;
+  }, 400); // This duration should match the transition time in style.css
 }
 
 function showNextQuote() {
@@ -54,7 +66,8 @@ fetch('quotes.json')
   .then(data => {
     quotes = data;
     shuffleArray(quotes); // Shuffle the quotes once
-    showQuote(quotes[currentQuoteIndex]); // Show the first quote
+    // Set the first quote directly without an animation
+    quoteEl.textContent = quotes[currentQuoteIndex];
   })
   .catch(err => {
     quoteEl.textContent = "Failed to load quotes.";
