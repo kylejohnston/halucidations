@@ -73,10 +73,9 @@ p { margin: 0;}
   border: 8px solid #fff8;
   width: 80vw;
   max-width: 600px;
-  font-size: 2rem;
+  font-size: 1.5rem;
   transition: opacity 0.5s ease;
   aspect-ratio: 1 / 1;
-  text-wrap: balance;
   display: grid;
   place-items:center;
 }
@@ -106,6 +105,7 @@ button:hover {
   main { justify-content: center; }
   .quote-container {
     font-size: 3rem;
+    text-wrap: balance;
     aspect-ratio: 4 / 2;
   }
 }
